@@ -7,7 +7,6 @@ interface FeatureCardProps {
   image: string;
   icon: React.ReactNode;
   reverse?: boolean;
-  muted?: boolean;
   bgColor?: string;
 }
 
@@ -17,7 +16,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   image,
   icon,
   reverse = false,
-  muted = false,
   bgColor = "bg-[#F9FAFB]",
 }) => {
   return (
