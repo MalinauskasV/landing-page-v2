@@ -1,73 +1,121 @@
 import React from "react";
-import { Target, Zap, Maximize, BarChart2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const FeatureCard = ({
-  icon,
-  title,
-  description,
-}: {
+interface BenefitCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
-}) => (
-  <div className="bg-[#F9F9F7] rounded-2xl p-8 flex flex-col gap-6">
-    <div className="w-10 h-10 flex items-center justify-center text-black/60">{icon}</div>
-    <div className="flex flex-col gap-3">
-      <h3 className="text-black text-[22px] font-normal tracking-[-0.5px]">{title}</h3>
-      <p className="text-black/60 text-[15px] leading-[1.6]">{description}</p>
+  className?: string;
+  delay?: string;
+}
+
+const BenefitCard = ({ icon, title, description, className, delay }: BenefitCardProps) => {
+  return (
+    <div
+      data-animate
+      {...(delay ? { "data-delay": delay } : {})}
+      className={cn(
+        "flex flex-col items-start justify-start gap-[24px] p-[40px_32px] bg-white rounded-[16px] w-full h-full",
+        className
+      )}
+    >
+      <div className="relative flex items-center justify-center w-[52px] h-[52px] bg-[#F9FAFB] rounded-[8px] after:content-[''] after:absolute after:inset-0 after:border after:border-black/10 after:rounded-[8px] after:pointer-events-none">
+        <div className="w-[20px] h-[20px] flex items-center justify-center">
+          {icon}
+        </div>
+      </div>
+      <div className="flex flex-col gap-[12px]">
+        <h3 className="text-[32px] leading-[38.4px] font-normal tracking-[-0.64px] text-black">
+          {title}
+        </h3>
+        <p className="text-[19px] leading-[26.6px] font-normal tracking-[-0.19px] text-[#222222]">
+          {description}
+        </p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export const WorkflowSection = () => {
   return (
-    <section className="relative w-full bg-[#111111] py-[120px] px-10 flex flex-col items-center gap-16 overflow-hidden">
-      <div className="w-full max-w-[1600px] grid grid-cols-2 gap-4">
-        {/* Left: text + image card */}
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-6 p-0">
-            <h2 className="text-white text-[48px] leading-[1.15] font-normal tracking-[-2px] max-w-[440px]">
-              Designed for real-world finance workflows
+    <section className="w-full min-h-[1180px] bg-black flex items-center justify-center p-[120px_40px] overflow-hidden">
+      <div className="w-full max-w-[1600px] flex flex-row items-center gap-[20px]">
+        {/* Left hero column */}
+        <div className="relative flex flex-col justify-between items-start w-[544px] h-[940px] p-[40px_32px] rounded-[16px] overflow-hidden shrink-0">
+          <div className="absolute inset-0 z-0">
+            <img
+              src="/images/W6LNwSRaXfJ3JakRCOkNBfsitIo.png"
+              alt="Finance workflow"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/90 via-transparent to-black/90" />
+
+          <div className="relative z-[2] flex flex-col gap-[24px] w-full">
+            <h2 data-animate className="text-[40px] leading-[48px] font-normal tracking-[-0.8px] text-white">
+              Sukurta tikrosioms restorano operacijoms
             </h2>
-            <p className="text-white/60 text-[17px] leading-[1.6] max-w-[400px]">
-              From setup to daily use, Vectura streamlines financial workflows — making budgets, expenses, and reporting feel simple from day one.
+            <p data-animate data-delay="1" className="text-[19px] leading-[26.6px] font-normal tracking-[-0.19px] text-white">
+              Nuo diegimo iki kasdienio naudojimo, EventCast supaprastina restorano operacijas —
+              grafikai, dokumentai ir ataskaitos atrodo paprastai nuo pirmos dienos.
             </p>
           </div>
 
-          {/* Image */}
-          <div className="relative rounded-2xl overflow-hidden h-[380px] mt-4">
-            <img
-              src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1200&auto=format&fit=crop"
-              alt="Workflow"
-              className="w-full h-full object-cover"
-            />
-            <button className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white text-black text-[15px] font-medium px-8 py-4 rounded-full hover:bg-white/90 transition-colors whitespace-nowrap">
-              Get started with Vectura
-            </button>
+          <div className="relative z-[2] w-full">
+            <a
+              data-animate
+              data-delay="2"
+              href="/contact/sales"
+              className="flex items-center justify-center w-full h-[58.6px] bg-white rounded-[64px] transition-all duration-300 hover:opacity-[0.85]"
+            >
+              <span className="text-[19px] leading-[26.6px] font-normal tracking-[-0.19px] text-black">
+                Pradėti su EventCast
+              </span>
+            </a>
           </div>
         </div>
 
-        {/* Right: 2x2 feature cards */}
-        <div className="grid grid-cols-2 gap-4">
-          <FeatureCard
-            icon={<Target size={24} />}
-            title="Easy onboarding"
-            description="Guided setup and hands-on support help your team feel confident with Vectura in just a few days."
+        {/* Right 2×2 grid */}
+        <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-[20px] h-[940px]">
+          <BenefitCard
+            delay="1"
+            title="Greitas paleidimas"
+            description="Sistemos diegimas ir komandos onboarding per kelias dienas — su pilna pagalba ir migracija."
+            icon={
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                <path d="M9 12.75L11.25 15L15 9.75M21 12C21 13.268 20.37 14.389 19.407 15.068C19.608 16.229 19.26 17.467 18.364 18.364C17.467 19.261 16.229 19.608 15.068 19.407C14.389 20.37 13.268 21 12 21C10.732 21 9.611 20.37 8.932 19.407C7.771 19.609 6.533 19.261 5.636 18.364C4.739 17.467 4.391 16.229 4.593 15.068C3.629 14.389 3 13.268 3 12C3 10.732 3.629 9.611 4.593 8.932C4.391 7.771 4.739 6.533 5.636 5.636C6.533 4.739 7.771 4.392 8.932 4.593C9.611 3.63 10.732 3 12 3C13.268 3 14.389 3.63 15.068 4.593C16.229 4.391 17.467 4.739 18.364 5.636C19.261 6.533 19.609 7.771 19.407 8.932C20.371 9.611 21 10.732 21 12Z" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            }
           />
-          <FeatureCard
-            icon={<Zap size={24} />}
-            title="Fast adoption"
-            description="Vectura's clean workflows make it easy for finance teams and operators to jump in and get value quickly."
+          <BenefitCard
+            delay="2"
+            title="Lengvas pritaikymas"
+            description="Paprasta sąsaja leidžia komandai greitai pradėti naudotis sistema — be ilgų mokymų ar techninių žinių."
+            icon={
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                <path d="M3.75 13.5L14.25 2.25L12 10.5L20.25 10.5L9.75 21.75L12 13.5Z" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            }
           />
-          <FeatureCard
-            icon={<Maximize size={24} />}
-            title="Flexible integrations"
-            description="Connect with accounting tools, HR platforms, and company cards — no disruption to your flow."
+          <BenefitCard
+            delay="1"
+            title="Lanksčios integracijos"
+            description="Jungiasi su Syrve, r_keeper, nSoft, Lightspeed ir kitomis POS sistemomis — be jokių trikdžių."
+            icon={
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                <path d="M3.75 3.75L3.75 8.25M3.75 3.75L8.25 3.75M3.75 3.75L9 9M3.75 20.25L3.75 15.75M3.75 20.25L8.25 20.25M3.75 20.25L9 15M20.25 3.75L15.75 3.75M20.25 3.75L20.25 8.25M20.25 3.75L15 9M20.25 20.25L15.75 20.25M20.25 20.25L20.25 15.75M20.25 20.25L15 15" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            }
           />
-          <FeatureCard
-            icon={<BarChart2 size={24} />}
-            title="Scalable for growth"
-            description="Vectura adapts as you scale with role-based access, multi-entity support, and advanced controls."
+          <BenefitCard
+            delay="2"
+            title="Auga kartu su jumis"
+            description="EventCast prisitaiko augant — kelios lokacijos, rolių valdymas, sumuotinis darbo laikas ir LT DK atitiktis."
+            icon={
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                <path d="M3 15.75C3 15.129 3.504 14.625 4.125 14.625H6.375C6.996 14.625 7.5 15.129 7.5 15.75V22.5C7.5 23.121 6.996 23.625 6.375 23.625H4.125C3.504 23.625 3 23.121 3 22.5V15.75ZM9.75 10.875C9.75 10.254 10.254 9.75 10.875 9.75H13.125C13.746 9.75 14.25 10.254 14.25 10.875V22.125C14.25 22.746 13.746 23.25 13.125 23.25H10.875C10.254 23.25 9.75 22.746 9.75 22.125V10.875ZM16.5 6.375C16.5 5.754 17.004 5.25 17.625 5.25H19.875C20.496 5.25 21 5.754 21 6.375V22.125C21 22.746 20.496 23.25 19.875 23.25H17.625C17.004 23.25 16.5 22.746 16.5 22.125V6.375Z" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            }
           />
         </div>
       </div>

@@ -1,134 +1,178 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const testimonials = [
+interface Metric {
+  value: string;
+  label: string;
+}
+
+interface Testimonial {
+  id: number;
+  author: {
+    name: string;
+    position: string;
+    photo: string;
+  };
+  quote: string;
+  metrics: Metric[];
+}
+
+const testimonials: Testimonial[] = [
   {
-    name: "Clara Nguyen",
-    role: "Head of Finance",
-    company: "OdeaoLabs",
-    quote: "Vectura gave us instant visibility into spending across departments. We caught three budget overruns in the first week — and now every decision is backed by real-time data.",
-    stats: [
-      { value: "37%", label: "Reduction in budget overages" },
-      { value: "2x", label: "Faster spend approvals" },
+    id: 1,
+    author: {
+      name: "Tomas Petraitis",
+      position: "Restorano vadovas",
+      photo: "/images/ouCzy0PkkwTRTsPyF8ueqqjpE.jpg",
+    },
+    quote: "\u201cEventCast suteikė mums realaus laiko matomumą visose pamainose. Pirmą savaitę pastebėjome tris viršvalandžių neatitikimus — ir dabar kiekvienas sprendimas pagrįstas tikrais duomenimis.\u201d",
+    metrics: [
+      { value: "37%", label: "Mažiau viršvalandžių neatitikimų" },
+      { value: "2x", label: "Greitesnis grafikų patvirtinimas" },
     ],
-    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=60",
+  },
+  {
+    id: 2,
+    author: {
+      name: "Rasa Mockienė",
+      position: "Restoranų tinklo direktorė",
+      photo: "/images/T3G1zgRYArcLJbrL7CxzGWJ7WA.jpg",
+    },
+    quote: "\u201cAnksčiau balansuojome Excel lenteles, ieškojome tabelių ir nuolat gesindavome gaisrus. Dabar turime centralizuotą valdymą, automatinius tabelius ir realaus laiko įspėjimus \u2014 mažiau netikėtumų ir daugiau laiko strategijai.\u201d",
+    metrics: [
+      { value: "3.4 h", label: "Sutaupyta kiekvienam vadybininkui per savaitę" },
+      { value: "45%", label: "Mažiau rankinio administracinio darbo" },
+    ],
+  },
+  {
+    id: 3,
+    author: {
+      name: "Andrius Kazlauskas",
+      position: "Operacijų direktorius",
+      photo: "/images/PjLA8Iyr1A7qr9SoIU1zA88MKPg.jpg",
+    },
+    quote: "\u201cEventCast sutrumpino mūsų mėnesio uždarymo laiką beveik perpus. Ataskaitos švaresnės, komanda mažiau stresinga, ir pagaliau pasitikime savo skaičiais.\u201d",
+    metrics: [
+      { value: "48%", label: "Greitesnis mėnesio uždarymas" },
+      { value: "32%", label: "Komandos pasitenkinimo augimas" },
+    ],
   },
 ];
 
-export const TestimonialsSection = () => {
-  const [current] = useState(0);
+export const TestimonialsSection: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handlePrev = useCallback(() => {
+    setActiveIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+  }, []);
+
+  const handleNext = useCallback(() => {
+    setActiveIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+  }, []);
 
   return (
-    <section className="relative w-full bg-white py-[120px] px-10 flex flex-col items-center gap-16 overflow-hidden">
-      <div className="w-full max-w-[1600px] flex flex-col gap-16">
-        {/* Header */}
-        <div className="flex flex-col items-center gap-4 text-center">
-          <h2 className="text-black text-[58px] leading-[69.6px] font-normal tracking-[-2.9px]">
-            The Vectura shift—<br />straight from our users
-          </h2>
-          <p className="text-black/60 text-[21px]">Hear how Vectura is helping finance leaders take control.</p>
-        </div>
+    <section
+      className="w-full bg-white py-[120px] px-10 flex flex-col items-center gap-16 overflow-hidden"
+      id="testimonials"
+    >
+      {/* Heading */}
+      <div className="max-w-[1600px] w-full flex flex-col items-center gap-6">
+        <h2 data-animate className="text-[58px] leading-[69.6px] font-normal text-center tracking-[-2.9px] text-black max-w-[700px]">
+          EventCast pokytis&mdash;tiesiai iš mūsų vartotojų
+        </h2>
+        <p data-animate data-delay="1" className="text-[21px] leading-[29.4px] font-normal text-center text-[#222222] max-w-[750px]">
+          Sužinokite, kaip EventCast padeda restoranų vadovams valdyti komandą ir operacijas.
+        </p>
+      </div>
 
-        {/* Testimonial */}
-        <div className="flex flex-col gap-10">
-          {/* Company logos */}
-          <div className="flex items-center gap-10 justify-end">
-            <span className="text-[15px] font-medium text-black/30 flex items-center gap-2"><span className="text-[18px]">⬡</span> OdeaoLabs</span>
-            <span className="text-[15px] font-medium text-black/30">Quantum²</span>
-            <span className="text-[15px] font-medium text-black/30">◯ Ikigai Labs</span>
-          </div>
-
-          {/* Avatar + Name */}
-          <div className="flex flex-col gap-2">
-            <img
-              src={testimonials[current].avatar}
-              alt={testimonials[current].name}
-              className="w-16 h-16 rounded-full object-cover"
-            />
-            <p className="text-[12px] font-mono tracking-[0.72px] uppercase text-black/60">{testimonials[current].name}</p>
-            <p className="text-[12px] font-mono tracking-[0.72px] uppercase text-black/40">{testimonials[current].role}</p>
-          </div>
-
-          {/* Quote */}
-          <blockquote className="text-black text-[40px] leading-[1.2] font-normal tracking-[-1.5px] max-w-[860px]">
-            &ldquo;{testimonials[current].quote}&rdquo;
-          </blockquote>
-
-          {/* Stats + Nav */}
-          <div className="flex items-end justify-between border-t border-black/10 pt-8">
-            <div className="flex gap-16">
-              {testimonials[current].stats.map((stat, i) => (
-                <div key={i} className="flex flex-col gap-1">
-                  <p className="text-black text-[32px] font-normal tracking-[-1px]">{stat.value}</p>
-                  <p className="text-black/50 text-[13px]">{stat.label}</p>
+      {/* Slider */}
+      <div className="max-w-[1600px] w-full relative min-h-[700px]">
+        {testimonials.map((item, index) => (
+          <div
+            key={item.id}
+            className={cn(
+              "absolute inset-0 w-full h-full transition-all duration-500 ease-in-out flex flex-col justify-between p-10 bg-[#FBFAF9] rounded-2xl",
+              index === activeIndex
+                ? "opacity-100 translate-x-0 z-10"
+                : "opacity-0 translate-x-8 pointer-events-none z-0"
+            )}
+          >
+            {/* Top row */}
+            <div className="flex justify-between items-start w-full">
+              <div className="flex flex-col gap-4">
+                <div className="w-[100px] h-[100px] rounded-full overflow-hidden">
+                  <img
+                    src={item.author.photo}
+                    alt={item.author.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <button className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center hover:bg-black/5 transition-colors">
-                <ChevronLeft size={18} />
-              </button>
-              <button className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center hover:bg-black/5 transition-colors">
-                <ChevronRight size={18} />
-              </button>
-            </div>
-          </div>
-        </div>
+                <div className="flex flex-col gap-0.5">
+                  <p className="font-mono text-[15px] leading-[21px] tracking-[0.9px] uppercase font-bold text-black">
+                    {item.author.name}
+                  </p>
+                  <p className="font-mono text-[15px] leading-[21px] tracking-[0.9px] uppercase text-black/70">
+                    {item.author.position}
+                  </p>
+                </div>
+              </div>
 
-        {/* Case study cards */}
-        <div className="grid grid-cols-2 gap-4 mt-8">
-          <div className="bg-[#F0EDE8] rounded-2xl p-10 flex flex-col justify-between h-[380px]">
-            <h3 className="text-black text-[26px] leading-[1.3] font-normal tracking-[-0.5px] max-w-[380px]">
-              How Riverton Foods reduced procurement delays by 42% and gained full supplier cost visibility with Vectura
-            </h3>
-            <button className="w-fit bg-black text-white text-[15px] px-6 py-3 rounded-full hover:bg-black/80 transition-colors">
-              Read case study
-            </button>
-          </div>
-
-          <div className="flex flex-col gap-4">
-            <div className="bg-[#F4F4F5] rounded-2xl p-10 flex-1 flex flex-col justify-between h-[180px]">
-              <p className="text-black text-[64px] leading-none font-normal tracking-[-3px]">$3.1M</p>
-              <p className="text-black/50 text-[15px]">Annual supplier spend managed in real time</p>
-            </div>
-
-            <div className="relative rounded-2xl overflow-hidden h-[192px]">
-              <img
-                src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop"
-                alt="Case study"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-4 left-4 w-9 h-9 bg-white rounded-lg flex items-center justify-center">
-                <div className="w-5 h-5 bg-black" style={{ clipPath: "polygon(0 0, 60% 0, 100% 50%, 60% 100%, 0 100%)" }} />
+              {/* Company logos */}
+              <div className="flex items-center gap-12">
+                <span className="text-[15px] font-medium text-black flex items-center gap-2">
+                  <span className="text-[18px]">&#x2B21;</span> OdeaoLabs
+                </span>
+                <span className="text-[15px] font-medium text-black/20">Quantum&#178;</span>
+                <span className="text-[15px] font-medium text-black/20">&#9711; Ikigai Labs</span>
               </div>
             </div>
 
-            <div className="bg-[#F4F4F5] rounded-2xl p-6 flex flex-col gap-2">
-              <p className="text-black text-[48px] leading-none font-normal tracking-[-2px]">42%</p>
-              <p className="text-black/50 text-[15px]">Reduction in procurement cycle delays</p>
-            </div>
-          </div>
-        </div>
+            {/* Quote + bottom */}
+            <div className="flex flex-col gap-8 w-full">
+              <h3 className="text-[40px] leading-[48px] font-normal text-left tracking-[-0.8px] text-black max-w-[1100px]">
+                {item.quote}
+              </h3>
 
-        {/* Quote from case study */}
-        <div className="border border-black/10 rounded-2xl p-10 flex flex-col gap-6">
-          <blockquote className="text-black text-[24px] leading-[1.5] font-normal max-w-[600px]">
-            &ldquo;Vectura turned finance from a bottleneck into a partner. Today, our suppliers see us as easier to work with, our approvals happen without friction, and our finance team has time to plan for the future instead of fighting fires.&rdquo;
-          </blockquote>
-          <div className="flex items-center gap-4">
-            <img
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&auto=format&fit=crop&q=60"
-              alt="Daniel Ortega"
-              className="w-12 h-12 rounded-full object-cover"
-            />
-            <div>
-              <p className="text-[12px] font-mono tracking-[0.72px] uppercase text-black font-bold">Daniel Ortega</p>
-              <p className="text-[12px] font-mono tracking-[0.72px] uppercase text-black/50">Chief Financial Officer</p>
+              <div className="w-full h-[1px] bg-black/10" />
+
+              <div className="flex justify-between items-center w-full">
+                <div className="flex items-start gap-10">
+                  {item.metrics.map((metric, mIdx) => (
+                    <React.Fragment key={mIdx}>
+                      <div className="flex flex-col gap-1">
+                        <p className="text-2xl leading-[28.8px] font-normal tracking-[-0.24px] text-black">
+                          {metric.value}
+                        </p>
+                        <p className="text-[19px] leading-[26.6px] font-normal tracking-[-0.19px] text-[#222222]/50">
+                          {metric.label}
+                        </p>
+                      </div>
+                      {mIdx === 0 && <div className="w-[1px] h-[59px] bg-black/10" />}
+                    </React.Fragment>
+                  ))}
+                </div>
+
+                <div className="flex gap-[10px]">
+                  <button
+                    onClick={handlePrev}
+                    className="w-11 h-11 flex items-center justify-center bg-[#FBFAF9] rounded-full border-2 border-black/10 transition-colors hover:bg-white focus:outline-none"
+                  >
+                    <ChevronLeft className="w-4 h-4 text-black" />
+                  </button>
+                  <button
+                    onClick={handleNext}
+                    className="w-11 h-11 flex items-center justify-center bg-[#FBFAF9] rounded-full border-2 border-black/10 transition-colors hover:bg-white focus:outline-none"
+                  >
+                    <ChevronRight className="w-4 h-4 text-black" />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </section>
   );

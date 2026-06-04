@@ -4,9 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import {
   X,
-  Utensils,
-  Plane,
-  Laptop,
   Briefcase,
   AlertCircle,
   Download,
@@ -14,25 +11,26 @@ import {
   ChevronLeft,
   ChevronRight,
   Plus,
-  Check,
   ArrowRight,
+  Check,
 } from "lucide-react";
+import ExpenseTrackingCard from "./ExpenseTrackingCard";
 
 const ExpenseTrackingMockup = () => (
   <div className="w-[760px] bg-white rounded-2xl shadow-sm p-6 flex flex-col gap-6">
     <div className="flex justify-between items-center">
-      <p className="text-[19px] font-medium text-black">Expense tracking</p>
+      <p className="text-[19px] font-medium text-black">Darbo laiko tabelis</p>
       <div className="w-9 h-9 bg-[#E8EDF3] rounded-full flex items-center justify-center">
         <X className="w-4 h-4 text-black" />
       </div>
     </div>
     <div className="flex flex-col gap-2">
       {[
-        { label: "Lunch with team", cat: "Meals", status: "Approved", amount: "$ 179.99", color: "bg-emerald-500" },
-        { label: "Flight to Berlin", cat: "Travel", status: "Flagged", amount: "$ 849.99", color: "bg-orange-500", checked: true },
-        { label: "Zoom subscription", cat: "Software", status: "Approved", amount: "$ 129.99", color: "bg-emerald-500" },
-        { label: "Dinner w/ client", cat: "Meals", status: "Pending", amount: "$ 219.99", color: "bg-blue-500" },
-        { label: "Office furniture", cat: "Office", status: "Approved", amount: "$ 2499.99", color: "bg-emerald-500" },
+        { label: "Tomas Paulauskas", cat: "Virėjas", status: "Patvirtinta", amount: "160 val.", color: "bg-emerald-500" },
+        { label: "Inga Žukauskaitė", cat: "Padavėja", status: "Vėlavimas", amount: "148 val.", color: "bg-orange-500", checked: true },
+        { label: "Mantas Grigas", cat: "Baristas", status: "Patvirtinta", amount: "172 val.", color: "bg-emerald-500" },
+        { label: "Rūta Kazlauskienė", cat: "Virėja", status: "Laukiama", amount: "155 val.", color: "bg-blue-500" },
+        { label: "Paulius Stankus", cat: "Vadybininkas", status: "Patvirtinta", amount: "180 val.", color: "bg-emerald-500" },
       ].map((row, i) => (
         <div key={i} className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-slate-50 transition-colors">
           <div className="flex items-center gap-3 w-[250px]">
@@ -61,10 +59,10 @@ const ExpenseTrackingMockup = () => (
     <div className="flex justify-between items-center pt-4 border-t border-slate-100">
       <div className="flex items-center gap-2 text-orange-600">
         <AlertCircle size={18} />
-        <span className="text-[15px] font-medium">1 flagged transaction</span>
+        <span className="text-[15px] font-medium">1 neatitikimas</span>
       </div>
       <button className="bg-blue-600 text-white px-10 py-2.5 rounded-full text-[15px] font-medium">
-        Resolve
+        Peržiūrėti
       </button>
     </div>
   </div>
@@ -73,7 +71,7 @@ const ExpenseTrackingMockup = () => (
 const BudgetOversightMockup = () => (
   <div className="w-[760px] bg-white rounded-2xl shadow-sm p-6 flex flex-col gap-6">
     <div className="flex justify-between items-center">
-      <p className="text-[19px] font-medium text-black">Budget oversight</p>
+      <p className="text-[19px] font-medium text-black">Biudžeto kontrolė</p>
       <div className="w-9 h-9 bg-[#E8EDF3] rounded-full flex items-center justify-center">
         <X className="w-4 h-4 text-black" />
       </div>
@@ -109,7 +107,7 @@ const BudgetOversightMockup = () => (
 const ReportsMockup = () => (
   <div className="w-[760px] bg-white rounded-2xl shadow-sm p-6 flex flex-col gap-8">
     <div className="flex justify-between items-center">
-      <p className="text-[19px] font-medium text-black">Your reports</p>
+      <p className="text-[19px] font-medium text-black">Jūsų ataskaitos</p>
       <div className="flex gap-2">
         <div className="w-9 h-9 bg-[#E8EDF3] rounded-full flex items-center justify-center opacity-50">
           <ChevronLeft className="w-5 h-5 text-black" />
@@ -121,8 +119,8 @@ const ReportsMockup = () => (
     </div>
     <div className="grid grid-cols-2 gap-4">
       {[
-        { title: "Spend patterns", report: "Burn rate report - Q2", date: "July 18, 2025", color: "bg-purple-500" },
-        { title: "Spend categorization", report: "Category Breakdown - June 2025", date: "July 3, 2025", color: "bg-blue-500" },
+        { title: "Darbo kaštai", report: "Darbo kaštų ataskaita - Q2", date: "Liepa 18, 2025", color: "bg-purple-500" },
+        { title: "Kategorijų analizė", report: "Kaštų paskirstymas - Birželis 2025", date: "Liepa 3, 2025", color: "bg-blue-500" },
       ].map((card, i) => (
         <div key={i} className="p-5 rounded-2xl border border-slate-100 bg-slate-50/50 flex flex-col gap-4">
           <div className="flex items-center gap-2">
@@ -146,7 +144,7 @@ const ReportsMockup = () => (
     </div>
     <div className="flex justify-center">
       <button className="flex items-center gap-2 bg-black text-white px-8 py-3 rounded-full text-[15px] font-medium">
-        Generate report <Plus size={16} />
+        Generuoti ataskaitą <Plus size={16} />
       </button>
     </div>
   </div>
@@ -159,20 +157,20 @@ export const Features = () => {
   const features = [
     {
       id: "feature-1",
-      navLabel: "Expense tracking made easy",
-      description: "Get a real-time view of every transaction across teams. Vectura auto-categorizes expenses, flags anomalies, and makes expense visibility effortless.",
-      illustration: <ExpenseTrackingMockup />,
+      navLabel: "Tabeliai ir darbo laikas",
+      description: (<><strong className="font-semibold">Stebėkite kiekvieno darbuotojo darbo laiką</strong> realiuoju laiku. EventCast automatiškai surenka duomenis, žymi neatitikimus ir paruošia tabelius patvirtinimui — be Excel ir rankinių skaičiavimų.</>),
+      illustration: <ExpenseTrackingCard />,
     },
     {
       id: "feature-2",
-      navLabel: "Smarter budgeting controls",
-      description: (<><strong className="font-semibold">Set flexible budgets</strong> for teams, vendors, or departments. Vectura tracks usage live, sends early alerts, and helps you stay on target without the guesswork.</>),
+      navLabel: "Išmani biudžeto kontrolė",
+      description: (<><strong className="font-semibold">Nustatykite lanksčius biudžetus</strong> komandai, skyriams ar vietoms. EventCast seka sąnaudas realiuoju laiku, siunčia ankstyvus įspėjimus ir padeda išlikti plane be spėlionių.</>),
       illustration: <BudgetOversightMockup />,
     },
     {
       id: "feature-3",
-      navLabel: "Instant, export-ready reports",
-      description: (<><strong className="font-semibold">Generate reports in seconds</strong> — from burn rate to category breakdowns. Share clean, investor-ready exports or let Vectura handle the updates with automated insights.</>),
+      navLabel: "Ataskaitos vienu mygtuku",
+      description: (<><strong className="font-semibold">Generuokite ataskaitas per sekundes</strong> — nuo darbo kaštų iki kategorijų analizės. Eksportuokite payroll duomenis arba leiskite EventCast automatiškai generuoti įžvalgas.</>),
       illustration: <ReportsMockup />,
     },
   ];
@@ -181,15 +179,15 @@ export const Features = () => {
     const handleScroll = () => {
       if (!sectionRef.current) return;
       const cards = sectionRef.current.querySelectorAll(".feature-card");
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      const midpoint = window.innerHeight / 2;
       cards.forEach((card, index) => {
-        const element = card as HTMLElement;
-        if (scrollPosition >= element.offsetTop && scrollPosition < element.offsetTop + element.offsetHeight) {
+        const rect = (card as HTMLElement).getBoundingClientRect();
+        if (rect.top <= midpoint && rect.bottom > midpoint) {
           setActiveFeature(index);
         }
       });
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -199,11 +197,8 @@ export const Features = () => {
         <div className="flex-1 hidden lg:block" />
         <div className="flex-[2] flex flex-col gap-6">
           <h2 className="text-[58px] leading-[1.2] font-normal tracking-[-2.9px] text-black max-w-[780px]">
-            Everything your finance team needs — from spend to strategy
+            Viskas vienoje platformoje — nuo tabelių iki sąskaitų
           </h2>
-          <p className="text-[21px] leading-[1.4] text-[#222222] opacity-80 max-w-[650px]">
-            Vectura takes the friction out of financial ops — no spreadsheets, no confusion, no busywork. Manage expenses, budgets, and reports in one place — so your team can move faster and stay focused.
-          </p>
         </div>
       </div>
 
@@ -228,13 +223,21 @@ export const Features = () => {
 
         <ul className="flex-[2] flex flex-col gap-12 w-full">
           {features.map((feature) => (
-            <li key={feature.id} id={feature.id} className="feature-card flex flex-col gap-12 w-full min-h-[80vh]" style={{ scrollMarginTop: "120px" }}>
-              <div className="w-full h-[780px] bg-[#E8EDF3] rounded-2xl flex items-center justify-center overflow-hidden relative">
-                {feature.illustration}
-              </div>
-              <div className="w-full max-w-[580px] py-10">
-                <p className="text-[21px] leading-[1.4] text-[#222222]">{feature.description}</p>
-              </div>
+            <li key={feature.id} id={feature.id} className="feature-card flex flex-col w-full min-h-[80vh]" style={{ scrollMarginTop: "120px" }}>
+              {feature.description === null ? (
+                <div className="w-full rounded-2xl overflow-hidden">
+                  {feature.illustration}
+                </div>
+              ) : (
+                <>
+                  <div className="w-full h-[780px] bg-[#E8EDF3] rounded-2xl flex items-center justify-center overflow-hidden relative">
+                    {feature.illustration}
+                  </div>
+                  <div className="w-full max-w-[580px] py-10">
+                    <p className="text-[21px] leading-[1.4] text-[#222222]">{feature.description}</p>
+                  </div>
+                </>
+              )}
             </li>
           ))}
         </ul>

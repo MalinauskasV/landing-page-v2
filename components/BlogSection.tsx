@@ -1,93 +1,160 @@
 import React from "react";
 
-const posts = [
+interface Author {
+  name: string;
+  role: string;
+  photo: string;
+}
+
+interface BlogPost {
+  id: string;
+  title: string;
+  date: string;
+  category: string;
+  image: string;
+  author: Author;
+  href: string;
+}
+
+const BLOG_POSTS: BlogPost[] = [
   {
-    date: "MAY 13, 2025",
-    category: "OPS & STRATEGY",
-    title: "Scaling Finance Ops Without Slowing Down",
-    author: "Ella Navarro",
-    authorRole: "Head of Finance Ops",
-    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=800&auto=format&fit=crop",
-    authorAvatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=60",
+    id: "1",
+    title: "Kaip restoranai valdo grafikus be Excel ir WhatsApp",
+    date: "Geg. 13, 2025",
+    category: "Operacijos",
+    image: "/images/xQHTLAJm5NoiLEu2lyjmJCm1Lk.jpg",
+    author: {
+      name: "Eglė Navickaitė",
+      role: "Operacijų vadovė",
+      photo: "/images/LZYY71GfAAmwFGFURcEc4dfpoY.jpg",
+    },
+    href: "#",
   },
   {
-    date: "MAY 9, 2025",
-    category: "GUIDES & RESOURCES",
-    title: "Modern Budget Workflows That Don't Break Under Pressure",
-    author: "Jordan Malik",
-    authorRole: "Head of Customer Success",
-    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=800&auto=format&fit=crop",
-    authorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=60",
-    featured: true,
+    id: "2",
+    title: "Smart-ID ir e-parašai restoranų sutartyse — kaip tai veikia",
+    date: "Geg. 9, 2025",
+    category: "Gidai ir resursai",
+    image: "/images/vzV4ud1UQ7xLnwDx99ukoOvBW4.jpg",
+    author: {
+      name: "Justinas Malinauskis",
+      role: "Klientų sėkmės vadovas",
+      photo: "/images/JKorM5B0WmJOc8WoLSGW2e0hNG8.jpg",
+    },
+    href: "#",
   },
   {
-    date: "MAY 5, 2025",
-    category: "PRODUCT & UPDATES",
-    title: "Introducing Roles & Permissions in Vectura",
-    author: "Clara Jensen",
-    authorRole: "Product Marketing Manager",
-    image: "https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?q=80&w=800&auto=format&fit=crop",
-    authorAvatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&auto=format&fit=crop&q=60",
+    id: "3",
+    title: "Pristatome AI asistentą — grafikų rekomendacijos realiuoju laiku",
+    date: "Geg. 5, 2025",
+    category: "Produktas ir naujienos",
+    image: "/images/2kq6l9zkPi4aa57pKEkSYHd2qU.jpg",
+    author: {
+      name: "Kristina Jakštienė",
+      role: "Produkto marketingo vadovė",
+      photo: "/images/cmQt0ay0xGNLe9Sc30vSaXtio.jpg",
+    },
+    href: "#",
   },
 ];
 
-export const BlogSection = () => {
+const BlogCard: React.FC<{ post: BlogPost; delay?: string }> = ({ post, delay }) => {
   return (
-    <section className="relative w-full bg-white py-[120px] px-10 flex flex-col items-center gap-16 overflow-hidden">
-      <div className="w-full max-w-[1600px] flex flex-col gap-16">
-        {/* Header */}
-        <div className="flex items-end justify-between">
-          <div className="flex flex-col gap-4">
-            <h2 className="text-black text-[48px] leading-[1.15] font-normal tracking-[-2px] max-w-[480px]">
-              Ideas, insights, and updates from our team
-            </h2>
-            <p className="text-black/60 text-[17px] leading-[1.6] max-w-[480px]">
-              From product announcements to practical guides — stay in the loop with how Vectura is building smarter finance workflows and sharing what we&apos;ve learned along the way.
-            </p>
+    <a
+      data-animate
+      {...(delay ? { "data-delay": delay } : {})}
+      href={post.href}
+      className="group flex flex-col h-[650px] bg-[#FBFAF9] rounded-2xl overflow-hidden transition-all duration-300"
+    >
+      {/* Image */}
+      <div className="relative h-[320px] w-full overflow-hidden rounded-2xl">
+        <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.017]">
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="absolute bottom-6 right-6 px-8 py-[13px] bg-white/45 rounded-full opacity-0 translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 group-hover:bg-white/30">
+          <span className="text-[17px] leading-[23.8px] text-black font-normal">Read more</span>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 p-6 pb-8 flex flex-col justify-between">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="text-[12px] leading-[14.4px] tracking-[0.72px] text-[#222222] font-mono uppercase">
+              {post.date}
+            </span>
+            <span className="text-[12px] text-[#222222]">&bull;</span>
+            <div className="px-[13px] py-2 bg-[#F2ECE8] rounded-lg">
+              <span className="text-[12px] leading-[14.4px] tracking-[0.72px] text-[#222222] font-mono uppercase">
+                {post.category}
+              </span>
+            </div>
           </div>
-          <button className="bg-black text-white text-[15px] px-6 py-3 rounded-full hover:bg-black/80 transition-colors whitespace-nowrap">
-            View all posts
-          </button>
+          <h3 className="text-[28px] leading-[33.6px] font-normal tracking-[-0.56px] text-black">
+            {post.title}
+          </h3>
         </div>
 
-        {/* Posts grid */}
-        <div className="grid grid-cols-3 gap-6">
-          {posts.map((post, i) => (
-            <div key={i} className="group flex flex-col gap-5 cursor-pointer">
-              <div className="relative rounded-2xl overflow-hidden h-[260px]">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                {post.featured && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <button className="bg-white text-black text-[14px] font-medium px-5 py-2.5 rounded-full shadow-lg">
-                      Read more
-                    </button>
-                  </div>
-                )}
-              </div>
-              <div className="flex items-center gap-2 text-[12px] text-black/40 font-mono tracking-wider">
-                <span>{post.date}</span>
-                <span>•</span>
-                <span>{post.category}</span>
-              </div>
-              <h3 className="text-black text-[22px] leading-[1.3] font-normal tracking-[-0.5px]">
-                {post.title}
-              </h3>
-              <div className="flex items-center gap-3 mt-auto pt-4 border-t border-black/5">
-                <img
-                  src={post.authorAvatar}
-                  alt={post.author}
-                  className="w-9 h-9 rounded-full object-cover"
-                />
-                <div>
-                  <p className="text-[13px] font-medium text-black">{post.author}</p>
-                  <p className="text-[12px] text-black/40">{post.authorRole}</p>
-                </div>
-              </div>
-            </div>
+        {/* Author */}
+        <div className="flex items-center gap-[10px]">
+          <div className="w-12 h-12 rounded-full overflow-hidden shrink-0">
+            <img
+              src={post.author.photo}
+              alt={post.author.name}
+              className="w-full h-full object-cover object-top"
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[16px] leading-[22.4px] font-bold tracking-[-0.16px] text-[#222222]">
+              {post.author.name}
+            </span>
+            <span className="text-[16px] leading-[22.4px] font-normal tracking-[-0.16px] text-[#222222] opacity-70">
+              {post.author.role}
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  );
+};
+
+export const BlogSection: React.FC = () => {
+  return (
+    <section className="w-full bg-white py-[120px] px-10 overflow-hidden flex flex-col items-center gap-16">
+      {/* Heading */}
+      <div className="w-full max-w-[1600px] flex flex-row justify-between items-end">
+        <div className="flex flex-col items-start gap-6 max-w-[610px]">
+          <h2 data-animate className="text-[58px] leading-[69.6px] font-normal tracking-[-2.9px] text-black">
+            Idėjos, įžvalgos ir naujienos iš mūsų komandos
+          </h2>
+          <p data-animate data-delay="1" className="text-[21px] leading-[29.4px] text-[#222222] font-normal">
+            Nuo produkto atnaujinimų iki praktinių vadovų &mdash; sekite, kaip EventCast kuria modernias restoranų valdymo sistemas ir dalijasi tuo, ko išmokome.
+          </p>
+        </div>
+
+        <div className="pb-2">
+          <a
+            data-animate
+            data-delay="2"
+            href="/blog"
+            className="group inline-flex items-center justify-center px-[34px] py-4 bg-black rounded-[64px] transition-all duration-300 hover:opacity-[0.788]"
+          >
+            <span className="text-[19px] leading-[26.6px] text-white font-normal tracking-[-0.19px]">
+              View all posts
+            </span>
+          </a>
+        </div>
+      </div>
+
+      {/* Grid */}
+      <div className="w-full max-w-[1600px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {BLOG_POSTS.map((post, i) => (
+            <BlogCard key={post.id} post={post} delay={i > 0 ? String(i) : undefined} />
           ))}
         </div>
       </div>

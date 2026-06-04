@@ -2,12 +2,15 @@ import React from "react";
 
 export const HeroFull = () => {
   return (
-    <section className="relative flex flex-col items-center justify-end w-full min-h-[800px] h-screen overflow-hidden bg-white pt-[40px] px-[40px] pb-[120px]">
-      {/* Background Image with Overlay */}
+    <section className="relative flex flex-col items-center justify-end w-full min-h-[800px] h-screen overflow-hidden bg-black pb-[120px]">
+      {/* Background Video with Overlay */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=2560&auto=format&fit=crop"
-          alt="Hero Background"
+        <video
+          src="/media/etgmwEyGLXsT9Rv13qZtx7LlzQ.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/40" />
