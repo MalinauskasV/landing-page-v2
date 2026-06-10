@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import Logos from "@/components/Logos";
+import PilotStat from "@/components/PilotStat";
 import Features from "@/components/Features";
 import ManagementTools from "@/components/ManagementTools";
 import WorkflowSection from "@/components/WorkflowSection";
@@ -17,7 +17,7 @@ export default function Home() {
       <ScrollObserver />
       <Navbar />
       <HeroSection />
-      <Logos />
+      <PilotStat />
       <Features />
       <ManagementTools />
       <WorkflowSection />

@@ -100,7 +100,7 @@ export const WorkflowSection = () => {
           <BenefitCard
             delay="1"
             title="Lanksčios integracijos"
-            description="Jungiasi su Syrve, r_keeper, nSoft, Lightspeed ir kitomis POS sistemomis — be jokių trikdžių."
+            description="Jungiasi su Wolt, Bolt, Syrve, Rivile, SmartID ir Dokobit — užsakymai, apskaita ir e-pasirašymas be jokių trikdžių."
             icon={
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
                 <path d="M3.75 3.75L3.75 8.25M3.75 3.75L8.25 3.75M3.75 3.75L9 9M3.75 20.25L3.75 15.75M3.75 20.25L8.25 20.25M3.75 20.25L9 15M20.25 3.75L15.75 3.75M20.25 3.75L20.25 8.25M20.25 3.75L15 9M20.25 20.25L15.75 20.25M20.25 20.25L20.25 15.75M20.25 20.25L15 15" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
